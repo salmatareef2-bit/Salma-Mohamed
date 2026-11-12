@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Salma &amp; Mohamed</title>
+<meta name="description" content="Save the date: Salma Tareef &amp; Mohamed Tamer, Friday 11 December 2026, Ziya, New Cairo.">
+<meta property="og:title" content="Salma &amp; Mohamed: Save the Date">
+<meta property="og:description" content="Friday, 11 December 2026 · Ziya, New Cairo">
+<meta name="theme-color" content="#e9eedb">
+<link rel="preload" as="image" href="img/envelope.webp">
+<link rel="preload" as="image" href="img/flap.webp">
+<link rel="preload" as="image" href="img/bg.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+SC:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+:root{
+  --cream:#fbf7f1; --ink:#5b5340; --olive-ink:#55532d; --olive:#6f6d3a; --muted:#8f8670;
+  --berry:#861c40;               /* matches the wax seal and the bridesmaid dresses */
+  --script:"Pinyon Script","Snell Roundhand","Apple Chancery",cursive;
+  --caps:"Cormorant SC","Cormorant Garamond",Garamond,"Times New Roman",serif;
+  --serif:"Cormorant Garamond",Garamond,"Times New Roman",serif;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .3 0 0 0 0 .27 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#9f926b;color:var(--ink)}
+body{font-family:var(--serif);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.sealed{overflow:hidden;height:100svh}
+img{display:block;max-width:100%;user-select:none;-webkit-user-drag:none}
+[hidden]{display:none!important}
+
+/* ---------- painted ground; turns to cream once the envelope opens ---------- */
+#bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+#bg::before{content:"";position:absolute;inset:-30px;background:url(img/bg.webp) center/cover no-repeat;filter:blur(3.5px);transform:scale(1.04)}
+#bg .rose{position:absolute;inset:0;
+  background:radial-gradient(ellipse 75% 50% at 6% 96%,rgba(134,28,64,.24),transparent 72%),
+             radial-gradient(ellipse 65% 42% at 98% 6%,rgba(134,28,64,.16),transparent 72%),
+             radial-gradient(ellipse 55% 35% at 90% 72%,rgba(150,60,90,.12),transparent 72%)}
+#bg .shade{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 40%,rgba(50,48,25,.22) 100%);transition:opacity 1.6s ease}
+#bg .veil{position:absolute;inset:0;background:#e9eedb;opacity:0;transition:opacity 2s ease}
+body.opening #bg .veil,body.opened #bg .veil{opacity:1}
+body.opening #bg .shade,body.opened #bg .shade{opacity:0}
+
+main{position:relative;z-index:1;padding:0 max(16px,env(safe-area-inset-right,0px)) calc(56px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+
+/* ---------- hero: the envelope. Sealed, it sits mid-screen; opened, it settles at the top ---------- */
+.hero{--w:min(86vw,430px);padding-top:calc(var(--w) * .46 + 30px + env(safe-area-inset-top,0px));display:flex;justify-content:center;
+  transform:translateY(var(--lift,0px));transition:transform 1.9s cubic-bezier(.45,0,.2,1)}
+body.opening .hero,body.opened .hero{transform:none}
+
+.stage{position:relative;width:var(--w);aspect-ratio:1100/727}
+.stage>*{position:absolute}
+
+/* back of the envelope */
+.back{inset:.4% .6% 1.5%;z-index:0;border-radius:3px;
+  background:linear-gradient(180deg,rgba(120,60,50,.22),rgba(120,60,50,.06) 55%),var(--grain),#d6969f;
+  box-shadow:0 22px 30px rgba(30,25,10,.30);transition:box-shadow 1.8s ease}
+body.opening .back,body.opened .back{box-shadow:0 18px 26px rgba(90,60,40,.16)}
+
+/* keepsakes inside the envelope; they rise once it opens */
+.k{z-index:2;transition:transform 1.5s cubic-bezier(.25,.7,.2,1)}
+.k img{width:100%}
+
+.k-card{left:39%;width:50%;top:8%;z-index:2;transform-origin:50% 100%;opacity:0;
+  filter:drop-shadow(0 3px 7px rgba(60,58,25,.25));transition:transform 1.5s cubic-bezier(.25,.7,.2,1),opacity .6s ease .15s}
+.k-card img{width:100%;display:block}
+.k-frame{left:8%;width:34%;top:22%;z-index:3}
+.k-frame .photo{position:absolute;left:20%;right:20%;top:16%;bottom:16%;border-radius:50%;z-index:-1;
+  background:url(img/photo.webp) 50% 50%/cover no-repeat,#cfcfcf;box-shadow:inset 0 2px 8px rgba(30,30,20,.35)}
+.k-lily .carn{position:absolute;width:56%;left:-14%;top:40%;transform:rotate(-16deg);filter:drop-shadow(0 3px 4px rgba(80,30,40,.25))}
+.k-lily{left:-2%;width:25%;top:10%;z-index:2;opacity:0;transition:transform 1.5s cubic-bezier(.25,.7,.2,1) .22s,opacity .5s ease .3s}
+.k-heart{left:28%;width:41%;top:40%;z-index:5;filter:drop-shadow(0 5px 8px rgba(120,50,50,.16))}
+.k-heart img{filter:brightness(1.1) saturate(.7)}
+.k-heart .d{position:absolute;left:0;right:0;top:35%;text-align:center;color:var(--berry);font-size:clamp(.95rem,4.3vw,1.45rem);letter-spacing:.07em;font-weight:500;text-shadow:0 1px 0 rgba(255,240,240,.5)}
+
+.opening .k-card,.opened .k-card{transform:translateY(-58%) rotate(5deg);opacity:1}
+.opening .k-frame,.opened .k-frame{transform:translateY(-86%) rotate(-5deg);transition-delay:.12s}
+.opening .k-lily,.opened .k-lily{transform:translateY(-96%) rotate(-12deg);opacity:1}
+.opening .k-heart,.opened .k-heart{transform:translateY(-62%)}
+.k-heart{transform-origin:50% 80%}
+body.opening .k-heart{transition:none;animation:heartRise 1.6s cubic-bezier(.33,.8,.35,1) .6s both}
+@keyframes heartRise{
+  0%{transform:translateY(0) scale(.94)}
+  70%{transform:translateY(-64.5%) scale(1.01)}
+  100%{transform:translateY(-62%) scale(1)}}
+
+/* front pocket, seal printed on it */
+.pocket{inset:0;z-index:6}
+.pocket img{width:100%;height:100%}
+
+/* top flap: lace front face, plain inside face, shading that follows the swing */
+.p-flap{inset:0;z-index:7;perspective:900px;perspective-origin:50% 40%;transition:opacity .7s ease}
+.t3 .p-flap{z-index:1}
+.t4 .p-flap{opacity:0}
+.flapwrap{position:absolute;left:-1%;width:102%;top:-.4%;aspect-ratio:578/258;transform-origin:50% 1.2%;transform-style:preserve-3d}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face img{width:100%;height:100%}
+.front{filter:drop-shadow(0 2px 1.5px rgba(110,55,45,.32)) drop-shadow(0 7px 9px rgba(110,55,45,.18))}
+.back-face{transform:rotateX(180deg)}
+.back-face img{transform:scaleY(-1);filter:brightness(.78) saturate(.75)}
+body.sealed:not(.started) .stage:has(.seal:hover) .flapwrap{transform:rotateX(5deg);transition:transform .5s ease}
+.t2 .flapwrap{animation:flapOpen 1.35s forwards}
+.t2 .front img{animation:shadeFront 1.35s forwards}
+.t2 .back-face img{animation:shadeBack 1.35s forwards}
+@keyframes flapOpen{
+  0%{transform:rotateX(0deg);animation-timing-function:cubic-bezier(.4,0,.6,1)}
+  14%{transform:rotateX(9deg);animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  66%{transform:rotateX(181deg);animation-timing-function:cubic-bezier(.3,0,.4,1)}
+  84%{transform:rotateX(166deg);animation-timing-function:ease-in-out}
+  100%{transform:rotateX(170deg)}}
+@keyframes shadeFront{0%,14%{filter:brightness(1)}42%{filter:brightness(.74)}100%{filter:brightness(.74)}}
+@keyframes shadeBack{0%,38%{filter:brightness(.74) saturate(.75)}70%{filter:brightness(1.05) saturate(.8)}84%{filter:brightness(.98) saturate(.8)}100%{filter:brightness(1.01) saturate(.8)}}
+
+/* wax seal over the printed one */
+.seal{left:41.8%;width:16.4%;top:50.6%;z-index:8;padding:0;border:0;background:none;cursor:pointer;border-radius:50%;
+  filter:drop-shadow(0 3px 4px rgba(80,30,40,.35));transition:transform .3s ease,filter .3s ease;-webkit-tap-highlight-color:transparent}
+.seal img{width:100%}
+body.sealed:not(.started) .seal{animation:sealHint 2.8s ease-in-out 4s infinite}
+body.sealed:not(.started) .seal:hover{transform:translateY(-2px) scale(1.04);filter:drop-shadow(0 6px 7px rgba(80,30,40,.38))}
+.seal:focus-visible{outline:2px solid #fffaf2;outline-offset:4px}
+body:not(.sealed) .seal,body.started .seal{cursor:default}
+@keyframes sealHint{0%,70%,100%{transform:scale(1)}80%{transform:scale(1.06)}90%{transform:scale(.98)}}
+.t1 .seal{animation:press .55s ease}
+@keyframes press{0%{transform:scale(1)}35%{transform:scale(.93)}70%{transform:scale(1.05)}100%{transform:scale(1)}}
+
+/* writing on the flap */
+.label{inset:0;z-index:9;pointer-events:none;color:#6a5a43;text-align:center}
+.label .head,.label .open{position:absolute;left:0;right:0;transition:opacity .4s ease}
+.label .head{top:10%;display:flex;flex-direction:column;align-items:center;gap:clamp(9px,2.8vw,15px)}
+.label .from{font-family:var(--caps);font-size:clamp(.62rem,2.3vw,.8rem);letter-spacing:.22em;line-height:1;padding-left:.22em}
+.label .names{font-family:var(--script);color:var(--berry);display:block;font-size:clamp(1.15rem,4.8vw,1.6rem);line-height:1;letter-spacing:.01em;white-space:nowrap}
+.label .open{bottom:6.5%;font-family:var(--caps);font-size:clamp(.62rem,2.4vw,.8rem);letter-spacing:.16em}
+.t1 .label .head,.t1 .label .open{opacity:0;animation:none}
+.label .from .ch{opacity:0;animation:typeIn .01s linear forwards;animation-delay:calc(.6s + var(--i) * 75ms)}
+.label .names{padding:0 .3em;opacity:0;
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 33.3%,transparent 66.6%,transparent 100%);mask-image:linear-gradient(90deg,#000 0%,#000 33.3%,transparent 66.6%,transparent 100%);
+  -webkit-mask-size:300% 100%;mask-size:300% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-position:100% 0;mask-position:100% 0;
+  animation:write 3.6s cubic-bezier(.42,0,.58,1) forwards;animation-delay:calc(var(--done) - .3s)}
+.label .open{opacity:0;animation:fadeIn .8s ease forwards,breathe 2.6s ease-in-out infinite;animation-delay:calc(var(--done) + 3.2s),calc(var(--done) + 4s)}
+@keyframes typeIn{to{opacity:1}}
+@keyframes write{0%{-webkit-mask-position:100% 0;mask-position:100% 0;opacity:0}15%{opacity:1}100%{-webkit-mask-position:0% 0;mask-position:0% 0;opacity:1}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes breathe{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* bouquet resting on the corner; amaranthus tails hang over the edge */
+.drape{right:-9%;top:6%;width:34%;aspect-ratio:231/483;z-index:10;transform:rotate(-5deg);transform-origin:50% 20%;pointer-events:none;
+  filter:drop-shadow(0 2px 2px rgba(70,40,25,.26)) drop-shadow(3px 9px 10px rgba(70,40,25,.14))}
+.drape img{position:absolute;inset:0;width:100%;height:100%}
+.drape .top{clip-path:inset(0 0 37% 0);z-index:2}
+.drape .tails{clip-path:inset(60% 0 0 0);transform-origin:50% 61%;animation:hang 5.5s ease-in-out infinite}
+@keyframes hang{0%,100%{transform:rotate(1.2deg)}50%{transform:rotate(-1.6deg)}}
+
+/* ---------- details below the envelope ---------- */
+.details{max-width:520px;margin:0 auto;text-align:center;padding-top:clamp(34px,8vw,52px);display:flex;flex-direction:column;align-items:center}
+.details>*{opacity:0;transform:translateY(14px);transition:opacity 1s ease,transform 1s ease}
+body.opened .details>*{opacity:1;transform:none}
+body.opened .details>*:nth-child(2){transition-delay:.12s}
+body.opened .details>*:nth-child(3){transition-delay:.24s}
+body.opened .details>*:nth-child(4){transition-delay:.36s}
+body.opened .details>*:nth-child(5){transition-delay:.48s}
+body.opened .details>*:nth-child(6){transition-delay:.6s}
+body.opened .details>*:nth-child(7){transition-delay:.72s}
+body.opened .details>*:nth-child(8){transition-delay:.84s}
+.meet{font-family:var(--caps);font-size:.95rem;letter-spacing:.12em;color:var(--muted);margin:0}
+.place{font-family:var(--script);font-weight:400;font-size:clamp(2.05rem,9vw,2.8rem);line-height:1.15;color:var(--olive-ink);margin:10px 0 6px}
+.map{display:inline-flex;align-items:center;gap:6px;margin:0 0 18px;font-family:var(--caps);font-size:.86rem;letter-spacing:.14em;color:var(--berry);
+  text-decoration:none;border-bottom:1px solid rgba(134,28,64,.35);padding-bottom:2px;transition:border-color .2s}
+.map:hover{border-color:var(--berry)}
+.map:focus-visible{outline:2px solid var(--berry);outline-offset:4px;border-radius:2px}
+.map svg{width:15px;height:15px}
+.when{font-family:var(--caps);font-size:1.05rem;letter-spacing:.08em;line-height:1.65;margin:0}
+.time{display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0 0;color:var(--olive-ink)}
+.time::before,.time::after{content:"";width:34px;height:1px;background:currentColor;opacity:.35}
+.time span{font-family:var(--serif);font-size:1.5rem;line-height:1;letter-spacing:.03em;font-variant-numeric:oldstyle-nums;font-feature-settings:"onum"}
+.time small{font-family:var(--caps);font-size:.95rem;letter-spacing:.12em;margin-left:-6px;text-transform:lowercase}
+.count{display:flex;justify-content:center;gap:clamp(10px,4vw,22px);margin:40px 0 0;font-variant-numeric:tabular-nums}
+.count div{display:flex;flex-direction:column;align-items:center;min-width:46px}
+.count b{font-weight:400;font-size:clamp(1.55rem,6.6vw,2rem);letter-spacing:.06em}
+.count span{font-family:var(--caps);font-size:.72rem;letter-spacing:.12em;color:var(--muted)}
+.count i{font-style:normal;font-size:1.5rem;color:var(--muted);align-self:flex-start;padding-top:1px}
+.btn{display:inline-block;margin-top:44px;background:var(--olive);color:#f7f1e3;border:0;border-radius:999px;
+  font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.3rem;letter-spacing:.04em;padding:13px 44px 15px;cursor:pointer;text-decoration:none;
+  box-shadow:0 6px 16px rgba(85,83,45,.22),inset 0 0 0 4px var(--olive),inset 0 0 0 5px rgba(247,241,227,.45);transition:filter .2s}
+.btn:hover{filter:brightness(.94)}
+.btn:focus-visible{outline:2px solid var(--berry);outline-offset:3px}
+.rsvp-btn{display:block;width:min(90%,380px);margin-top:40px;border-radius:14px;-webkit-tap-highlight-color:transparent;
+  filter:drop-shadow(0 6px 10px rgba(85,83,45,.2));transition:transform .25s ease,filter .25s ease}
+.rsvp-btn img{width:100%;height:auto;display:block}
+.rsvp-btn:hover{transform:translateY(-2px);filter:drop-shadow(0 9px 14px rgba(85,83,45,.26))}
+.rsvp-btn:active{transform:translateY(1px) scale(.99)}
+.rsvp-btn:focus-visible{outline:2px solid var(--berry);outline-offset:4px}
+.look{font-family:var(--caps);font-size:.88rem;letter-spacing:.1em;color:var(--muted);margin:16px 0 0}
+.love{max-width:520px;margin:-14px auto 0;text-align:center;display:flex;flex-direction:column;align-items:center;
+  opacity:0;transform:translateY(18px);transition:opacity 1.2s ease,transform 1.2s ease}
+.love.shown{opacity:1;transform:none}
+.lk-wrap{position:relative;width:min(100%,486px);aspect-ratio:928/674.1}
+.lockets{position:absolute;top:0;left:-81.0668%;width:270.7974%;max-width:none;height:auto;margin-top:-9.6121%;pointer-events:none}
+main{overflow-x:clip}
+.love .note{font-family:var(--serif);font-style:italic;font-size:clamp(1.12rem,4.6vw,1.3rem);line-height:1.65;color:var(--olive-ink);margin:26px 0 0;max-width:27em;padding:0 6px}
+.love .note+.note{margin-top:22px}
+.love .wl{font-family:var(--caps);font-size:1rem;letter-spacing:.24em;color:var(--ink);margin:30px 0 0}
+.love .sig{font-family:var(--script);font-size:clamp(2.2rem,9.5vw,2.9rem);color:var(--berry);line-height:1.2;margin:8px 0 0}
+.replay{display:block;margin:34px auto 0;background:none;border:0;font-family:var(--caps);font-size:.8rem;letter-spacing:.14em;
+  color:var(--muted);text-decoration:underline;text-underline-offset:4px;cursor:pointer;padding:6px;opacity:0;transition:opacity 1s ease 1s}
+body.opened .replay{opacity:.8}
+
+/* ---------- RSVP sheet ---------- */
+.rsvp{position:fixed;inset:0;z-index:50;background:#e9eedb;visibility:hidden;transform:translateY(100%);
+  transition:transform .75s cubic-bezier(.3,.7,.2,1),visibility 0s linear .75s}
+.rsvp::before{content:"";position:absolute;inset:0;background:var(--grain);opacity:.55;pointer-events:none}
+.rsvp.open{visibility:visible;transform:none;transition:transform .75s cubic-bezier(.3,.7,.2,1),visibility 0s}
+.rsvp-scroll{position:relative;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:calc(56px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.rsvp-card{position:relative;max-width:460px;margin:0 auto;background:#f4f6ec;border-radius:3px;text-align:center;
+  padding:58px clamp(22px,7vw,40px) 40px;box-shadow:0 1px 2px rgba(70,70,30,.1),0 18px 40px rgba(70,70,30,.14)}
+.rsvp-card::before,.rsvp-card::after{content:"";position:absolute;pointer-events:none;border:1px solid rgba(111,109,58,.3)}
+.rsvp-card::before{inset:12px}.rsvp-card::after{inset:16px;border-color:rgba(111,109,58,.14)}
+.rsvp-close{position:absolute;top:22px;right:24px;z-index:2;width:36px;height:36px;border:0;border-radius:50%;background:none;
+  font-size:1.7rem;line-height:1;color:var(--olive-ink);cursor:pointer}
+.rsvp-close:focus-visible{outline:2px solid var(--berry)}
+.rsvp-flowers{position:absolute;left:-18px;top:-46px;width:96px;height:120px;pointer-events:none}
+.rf-lily{position:absolute;left:0;top:0;width:78px;transform:rotate(-14deg);filter:drop-shadow(0 4px 5px rgba(60,50,30,.18))}
+.rf-carn{position:absolute;left:44px;top:58px;width:46px;transform:rotate(12deg);filter:drop-shadow(0 3px 4px rgba(80,30,40,.25))}
+.rsvp-eyebrow{font-family:var(--caps);font-size:.86rem;letter-spacing:.2em;color:var(--muted);margin:0}
+.rsvp-title{font-family:var(--script);font-weight:400;font-size:clamp(2.5rem,11vw,3.2rem);line-height:1.15;color:var(--berry);margin:6px 0 0}
+.rsvp-rule{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px auto 4px;width:62%;color:var(--olive)}
+.rsvp-rule::before,.rsvp-rule::after{content:"";flex:1;height:1px;background:currentColor;opacity:.35}
+.rsvp-rule svg{width:20px;height:20px;flex:none;opacity:.8}
+.rsvp-when{font-family:var(--caps);font-size:.95rem;letter-spacing:.08em;color:var(--olive-ink);margin:6px 0 30px}
+#rsvpForm{display:flex;flex-direction:column;gap:24px;text-align:left}
+.fld{display:flex;flex-direction:column;gap:6px;border:0;margin:0;padding:0;min-width:0}
+.fld>span,.fld legend{font-family:var(--caps);font-size:.86rem;letter-spacing:.14em;color:var(--olive-ink);padding:0;margin-bottom:6px}
+.fld input[type=text],.fld textarea{font:inherit;font-size:1.15rem;color:var(--ink);background:transparent;border:0;
+  border-bottom:1px solid rgba(111,109,58,.45);border-radius:0;padding:6px 2px 8px;width:100%;transition:border-color .2s}
+.fld textarea{resize:vertical;min-height:84px;line-height:1.5;border:1px solid rgba(111,109,58,.35);border-radius:2px;padding:10px 12px;background:rgba(255,255,250,.4)}
+.fld input::placeholder,.fld textarea::placeholder{color:#a9a48e;font-style:italic}
+.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--berry)}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choices label{position:relative;cursor:pointer}
+.choices input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.choices span{display:block;text-align:center;font-family:var(--serif);font-style:italic;font-size:1.08rem;color:var(--olive-ink);
+  border:1px solid rgba(111,109,58,.45);border-radius:999px;padding:11px 8px;transition:background .25s,color .25s,border-color .25s}
+.choices input:checked+span{background:var(--olive);border-color:var(--olive);color:#f7f1e3}
+.choices input:focus-visible+span{outline:2px solid var(--berry);outline-offset:2px}
+.song{display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(111,109,58,.45)}
+.song:focus-within{border-color:var(--berry)}
+.song svg{width:18px;height:18px;color:var(--olive);flex:none}
+.song input[type=text]{border-bottom:0}
+.err{min-height:1.2em;margin:-8px 0 -10px;font-style:italic;font-size:1rem;color:var(--berry);text-align:center}
+.rsvp-send{align-self:center;margin-top:4px}
+.rsvp-done{padding:6px 0 4px}
+.done-script{font-family:var(--script);font-size:clamp(2.2rem,9.5vw,2.8rem);color:var(--berry);margin:0;line-height:1.2}
+.done-note{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--olive-ink);line-height:1.6;margin:14px 0 0}
+.done-back{opacity:.85}
+body.rsvp-open{overflow:hidden}
+
+.sound{position:fixed;z-index:60;top:calc(14px + env(safe-area-inset-top,0px));right:calc(14px + env(safe-area-inset-right,0px));
+  width:42px;height:42px;border-radius:50%;border:1px solid rgba(111,109,58,.35);background:rgba(244,246,236,.85);color:var(--olive-ink);
+  display:grid;place-items:center;cursor:pointer;box-shadow:0 3px 10px rgba(70,70,30,.15);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.sound svg{width:20px;height:20px}
+.sound .off,.sound.muted .on{display:none}.sound.muted .off{display:block}
+.sound:focus-visible{outline:2px solid var(--berry);outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.label .from .ch,.label .names,.label .open{opacity:1;clip-path:none}}
+</style>
+</head>
+<body class="sealed">
+
+<audio id="song" src="audio/song.mp3" preload="auto" loop playsinline></audio>
+<button class="sound" id="soundBtn" type="button" aria-label="Mute music" aria-pressed="false" hidden>
+  <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5c1.2 1 1.2 6 0 7M18.5 6c2.5 2.3 2.5 9.7 0 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+  <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+</button>
+<div id="bg" aria-hidden="true"><div class="rose"></div><div class="shade"></div><div class="veil"></div></div>
+
+<main>
+  <section class="hero" id="hero" aria-label="Save the date">
+    <div class="stage" id="stage">
+      <div class="back"></div>
+
+      <div class="k k-card"><img src="img/card.webp" alt="Save the date: Salma Tareef and Mohamed Tamer are getting married"></div>
+      <div class="k k-frame"><div class="photo" role="img" aria-label="Salma and Mohamed"></div><img src="img/frame-olive.webp" alt=""></div>
+      <div class="k k-lily"><img src="img/lily-clean.webp" alt=""><img class="carn" src="img/carnation.webp" alt=""></div>
+      <div class="k k-heart"><img src="img/heart-clean.webp" alt=""><div class="d">11.12.2026</div></div>
+
+      <div class="pocket"><img src="img/envelope.webp" alt=""></div>
+      <div class="p-flap"><div class="flapwrap">
+        <div class="face front"><img src="img/flap.webp" alt=""></div>
+        <div class="face back-face"><img src="img/flap.webp" alt=""></div>
+      </div></div>
+      <button class="seal" id="sealBtn" type="button" aria-label="Break the seal to open the save the date"><img src="img/seal.webp" alt=""></button>
+      <div class="label">
+        <div class="head"><span class="from">A Love Letter from</span><span class="names">Salma &amp; Mohamed</span></div>
+        <span class="open">Tap the seal to open</span>
+      </div>
+      <div class="drape">
+        <img class="top" src="img/bouquet-clean.webp" alt="">
+        <img class="tails" src="img/bouquet-clean.webp" alt="">
+      </div>
+    </div>
+  </section>
+
+  <section class="details" aria-label="Where and when">
+    <p class="meet">Meet us at</p>
+    <h1 class="place">Ziya, New Cairo</h1>
+    <a class="map" href="https://maps.app.goo.gl/adaP4zV1AgiHEHNi7?g_st=i" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11Z" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+      Venue Location
+    </a>
+    <p class="when">Friday, 11 December 2026</p>
+    <p class="time"><span>4:00</span><small>pm</small></p>
+    <div class="count" aria-label="Countdown to the wedding">
+      <div><b data-cd="d">00</b><span>Days</span></div><i>:</i>
+      <div><b data-cd="h">00</b><span>Hours</span></div><i>:</i>
+      <div><b data-cd="m">00</b><span>Minutes</span></div><i>:</i>
+      <div><b data-cd="s">00</b><span>Seconds</span></div>
+    </div>
+    <a class="rsvp-btn" href="#rsvp" id="rsvpBtn"><img src="img/rsvp-button.webp" width="900" height="276" loading="lazy" decoding="async" alt="Kindly RSVP here"></a>
+    <p class="look">We look forward to celebrating together</p>
+  </section>
+  <section class="love" id="love" aria-label="A note from Salma and Mohamed">
+  <div class="lk-wrap"><img class="lockets" loading="lazy" decoding="async" src="img/lockets.webp" width="2513" height="775" alt="Salma and Mohamed as children, in two green heart lockets hanging from a pink satin ribbon"></div>
+    <p class="note">As we step into this new chapter, it would mean so much to have you by our side on our special day.</p>
+    <p class="note">Here’s to love, joy, and the beginning of our forever!</p>
+    <p class="wl">With love</p>
+    <p class="sig">Salma &amp; Mohamed</p>
+  </section>
+  <button class="replay" id="replay" type="button">Seal the envelope again</button>
+</main>
+
+<section class="rsvp" id="rsvp" role="dialog" aria-modal="true" aria-labelledby="rsvpTitle" aria-hidden="true">
+  <div class="rsvp-scroll">
+    <div class="rsvp-card">
+      <button class="rsvp-close" type="button" aria-label="Back to the invitation">&times;</button>
+      <div class="rsvp-flowers" aria-hidden="true"><img class="rf-lily" src="img/lily-clean.webp" alt=""><img class="rf-carn" src="img/carnation.webp" alt=""></div>
+      <p class="rsvp-eyebrow">Salma &amp; Mohamed</p>
+      <h2 class="rsvp-title" id="rsvpTitle">Kindly Respond</h2>
+      <div class="rsvp-rule" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 21V6"/><path d="M12 9c-2.5-.3-4.2-1.8-4.6-4.3 2.5.2 4.2 1.7 4.6 4.3Z"/><path d="M12 13c2.5-.3 4.2-1.8 4.6-4.3-2.5.2-4.2 1.7-4.6 4.3Z"/><path d="M12 17c-2.5-.3-4.2-1.8-4.6-4.3 2.5.2 4.2 1.7 4.6 4.3Z"/></svg></div>
+      <p class="rsvp-when">Friday, 11 December 2026<br>Ziya, New Cairo</p>
+
+      <form id="rsvpForm" novalidate>
+        <label class="fld"><span>Your name</span>
+          <input name="name" type="text" autocomplete="name" required placeholder="Full name">
+        </label>
+
+        <fieldset class="fld att">
+          <legend>Will you be attending?</legend>
+          <div class="choices">
+            <label><input type="radio" name="attending" value="yes" required><span>Joyfully accept</span></label>
+            <label><input type="radio" name="attending" value="no"><span>Regretfully decline</span></label>
+          </div>
+        </fieldset>
+
+        <label class="fld"><span>A note for us</span>
+          <textarea name="note" rows="3" placeholder="Wishes, memories, anything you'd like to share"></textarea>
+        </label>
+
+        <label class="fld"><span>Song recommendation</span>
+          <div class="song"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="6.5" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="17.5" cy="16" r="2.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+          <input name="song" type="text" aria-label="Song recommendation"></div>
+        </label>
+
+        <p class="err" id="rsvpErr" role="alert"></p>
+        <button class="btn rsvp-send" type="submit">Send my RSVP</button>
+      </form>
+
+      <div class="rsvp-done" id="rsvpDone" hidden>
+        <p class="done-script">Thank you<span id="doneName"></span></p>
+        <p class="done-note" id="doneNote"></p>
+        <button class="replay done-back" type="button">Back to the invitation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const WEDDING = new Date("2026-12-11T16:00:00+02:00").getTime(); // 4:00 PM Cairo
+  const body = document.body, hero = document.getElementById("hero"), stage = document.getElementById("stage");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* "A Love Letter from" types itself out, then the names are written in */
+  (function(){
+    const from = stage.querySelector(".label .from"), text = from.textContent;
+    from.textContent = ""; from.setAttribute("aria-label", text);
+    [...text].forEach((c,i) => { const sp = document.createElement("span"); sp.className = "ch"; sp.style.setProperty("--i", i); sp.textContent = c; sp.setAttribute("aria-hidden","true"); from.appendChild(sp); });
+    stage.style.setProperty("--done", (0.6 + text.length * 0.075 + 0.25).toFixed(2) + "s");
+  })();
+
+  const pad = n => String(n).padStart(2,"0");
+  function tick(){
+    let s = Math.max(0, Math.floor((WEDDING - Date.now())/1000));
+    const v = {d:Math.floor(s/86400), h:pad(Math.floor(s%86400/3600)), m:pad(Math.floor(s%3600/60)), s:pad(s%60)};
+    document.querySelectorAll("[data-cd]").forEach(el => el.textContent = v[el.dataset.cd]);
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* while sealed, hold the envelope in the middle of the screen */
+  function centre(){
+    if (!body.classList.contains("sealed")) return;
+    hero.style.transition = "none"; hero.style.setProperty("--lift","0px");
+    const r = stage.getBoundingClientRect();
+    hero.style.setProperty("--lift", (innerHeight/2 - (r.top + r.height/2) + 10) + "px");
+    hero.getBoundingClientRect(); hero.style.transition = "";
+  }
+  centre(); addEventListener("resize", centre);
+  if (document.fonts) document.fonts.ready.then(centre);
+
+  let seen = false;
+  try { seen = sessionStorage.getItem("sm-opened") === "1"; } catch(e){}
+  const sealBtn = document.getElementById("sealBtn");
+  if (seen){ body.classList.remove("sealed"); body.classList.add("opened"); stage.classList.add("t1","t3","t4"); sealBtn.disabled = true; }
+
+  const wait = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+  let started = seen;
+  async function open(){
+    if (started) return; started = true;
+    try { sessionStorage.setItem("sm-opened","1"); } catch(e){}
+    body.classList.add("started"); sealBtn.disabled = true; sealBtn.blur();
+    startSong();
+    stage.classList.add("t1");                       // seal presses, writing fades
+    await wait(260);  stage.classList.add("t2");      // flap peels off the seal and swings open
+    await wait(520);  stage.classList.add("t3");      // flap passes upright, drops behind
+    await wait(420);  stage.classList.add("t4");      // flap folds away
+    body.classList.add("opening");                    // keepsakes rise, envelope settles at the top, page turns cream
+    await wait(1300); body.classList.remove("sealed"); body.classList.add("opened");
+  }
+  sealBtn.addEventListener("click", open);
+
+  /* music: starts with the tap on the seal, fades in, loops softly */
+  const song = document.getElementById("song"), soundBtn = document.getElementById("soundBtn");
+  let muted = false;
+  try { muted = sessionStorage.getItem("sm-muted") === "1"; } catch(e){}
+  function fadeTo(target, ms){
+    const from = song.volume, t0 = performance.now();
+    (function step(){ const k = Math.max(0, Math.min(1,(performance.now() - t0)/ms)); const e = k*k*(3 - 2*k); song.volume = Math.max(0, Math.min(1, from + (target - from)*e)); if (k < 1) requestAnimationFrame(step); })();
+  }
+  function startSong(){
+    soundBtn.hidden = false;
+    if (muted) { soundBtn.classList.add("muted"); soundBtn.setAttribute("aria-pressed","true"); soundBtn.setAttribute("aria-label","Play music"); return; }
+    song.volume = 0; song.currentTime = 0;
+    const p = song.play(); if (p && p.catch) p.catch(() => {});
+    fadeTo(0.85, 6000);
+  }
+  soundBtn.addEventListener("click", () => {
+    muted = !muted;
+    try { sessionStorage.setItem("sm-muted", muted ? "1" : "0"); } catch(e){}
+    soundBtn.classList.toggle("muted", muted);
+    soundBtn.setAttribute("aria-pressed", String(muted));
+    soundBtn.setAttribute("aria-label", muted ? "Play music" : "Mute music");
+    if (muted) song.pause(); else { song.volume = 0.8; const p = song.play(); if (p && p.catch) p.catch(() => {}); }
+  });
+  if (seen) soundBtn.hidden = false, soundBtn.classList.toggle("muted", true), soundBtn.setAttribute("aria-label","Play music"), muted = true;
+
+  const love = document.getElementById("love");
+  if ("IntersectionObserver" in window && !reduce){
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && body.classList.contains("opened")){ love.classList.add("shown"); io.disconnect(); } }), {threshold:.15});
+    io.observe(love);
+    new MutationObserver(() => { if (body.classList.contains("opened")) { io.unobserve(love); io.observe(love); } }).observe(body,{attributes:true,attributeFilter:["class"]});
+  } else love.classList.add("shown");
+
+  /* RSVP sheet */
+  const rsvp = document.getElementById("rsvp"), form = document.getElementById("rsvpForm"), err = document.getElementById("rsvpErr");
+  let lastFocus = null;
+  function openRsvp(push){
+    if (rsvp.classList.contains("open")) return;
+    lastFocus = document.activeElement;
+    rsvp.classList.add("open"); rsvp.setAttribute("aria-hidden","false"); body.classList.add("rsvp-open");
+    if (push && location.hash !== "#rsvp") history.pushState(null, "", "#rsvp");
+    setTimeout(() => form.querySelector("input[name=name]")?.focus({preventScroll:true}), 500);
+  }
+  function closeRsvp(fromHash){
+    if (!rsvp.classList.contains("open")) return;
+    rsvp.classList.remove("open"); rsvp.setAttribute("aria-hidden","true"); body.classList.remove("rsvp-open");
+    if (!fromHash && location.hash === "#rsvp") history.back();
+    lastFocus?.focus?.({preventScroll:true});
+  }
+  document.getElementById("rsvpBtn").addEventListener("click", e => { e.preventDefault(); openRsvp(true); });
+  rsvp.querySelector(".rsvp-close").addEventListener("click", () => closeRsvp(false));
+  rsvp.querySelector(".done-back").addEventListener("click", () => closeRsvp(false));
+  addEventListener("keydown", e => { if (e.key === "Escape") closeRsvp(false); });
+  addEventListener("hashchange", () => location.hash === "#rsvp" ? openRsvp(false) : closeRsvp(true));
+  if (location.hash === "#rsvp" && body.classList.contains("opened")) openRsvp(false);
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(form));
+    if (!d.name || !d.name.trim()) { err.textContent = "Please add your name."; form.elements.name.focus(); return; }
+    if (!d.attending) { err.textContent = "Please let us know if you can attend."; return; }
+    err.textContent = "";
+    // Sending is not connected yet: this only shows the guest a summary of their answers.
+    document.getElementById("doneName").textContent = ", " + d.name.trim().split(/\s+/)[0];
+    document.getElementById("doneNote").textContent = d.attending === "yes"
+      ? "We can't wait to celebrate with you." : "You'll be missed. Thank you for letting us know.";
+    form.hidden = true; document.getElementById("rsvpDone").hidden = false;
+  });
+  document.getElementById("replay").addEventListener("click", () => {
+    try { sessionStorage.removeItem("sm-opened"); } catch(e){}
+    scrollTo(0,0); location.reload();
+  });
+})();
+</script>
+</body>
+</html>
